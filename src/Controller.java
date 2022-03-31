@@ -35,7 +35,7 @@ public class Controller {
                 drawStock(model.getPlayer());
             }
             discard(model.getPlayer());
-            showMeld(model.getPlayer());
+            findMeld(model.getPlayer());
             view.displayData("Player 1 has score " + model.getPlayer().getScore());
             if (allMelds(model.getPlayer())) {                                  //Game ends if player has all melds
                 break;
@@ -103,13 +103,18 @@ public class Controller {
     //Inputs: None
     //Post-conditions: Uses methods in Hand class to find and display the meld of the current hand of the player
     private void showMeld(Player player) {
+        view.displayData("Melds are ");
+        displayMeld(player.getMelds());
+    }
+
+    private void findMeld(Player player) {
         HashSet<Card> rankMeld = findRankMeld(player.getHand());
-        HashSet<Card> runMeld = findRunMeld(player.getHand(), rankMeld);
-        player.setMelds(runMeld);
         view.displayData("Rank melds are ");
         displayMeld(rankMeld);
+        HashSet<Card> runMeld = findRunMeld(player.getHand(), rankMeld);
         view.displayData("Run melds are ");
         displayMeld(runMeld);
+        player.setMelds(runMeld);
     }
 
     //Purpose: Find the rank melds in a given hand

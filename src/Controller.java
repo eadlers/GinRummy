@@ -21,7 +21,6 @@ public class Controller {
     public void play() {
         model.getPlayer().setDeadWood(calculateDeadwood(model.getPlayer()));         //Set score of initial hand given to player
         boolean firstTurn = true;
-        final int targetScore = 100;
         while (model.getPlayer().getScore() < 100) {
             view.displayData("New turn has begun");
             if (firstTurn) firstTurn = false;                                  //Do not have to calculate score if it is the first turn

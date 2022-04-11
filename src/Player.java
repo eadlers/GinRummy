@@ -12,7 +12,6 @@ public class Player {
     //Assumptions: Dealer has been created
     //Inputs:
     // Dealer dealer: dealer in charge of the cards
-    //Deck deck: Deck of cards, can be original or modified one with current cards
     //Post-conditions: Player instance has been created
     public Player(Dealer dealer) {
         this.hand = new ArrayList<>(dealer.dealCards(dealer.getDeck()));
@@ -85,7 +84,7 @@ public class Player {
 
     //Purpose: Setter / Will be used in increment 5
     //Assumptions: None
-    //Inputs: deadWood: int value used to set deadwood of player 
+    //Inputs: deadWood: int value used to set deadwood of player
     //Post-conditions: Sets the deadwood variable to the parameter int
     public void setDeadWood(int deadWood) {
         this.deadWood = deadWood;

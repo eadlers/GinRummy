@@ -18,7 +18,7 @@ public class Dealer {
 
     //Purpose: Shuffle the deck and give 10 cards to the player
     //Assumptions: None
-    //Inputs: Deck deck : original deck of cards created when we create a dealer object
+    //Inputs: ArrayList<Card> deck : deck of cards the dealer has
     //Post-conditions: Cards have been dealt and original deck has 10 less cards now
     public ArrayList<Card> dealCards(ArrayList<Card> deck) {
         ArrayList<Card> playerHand = new ArrayList<>();

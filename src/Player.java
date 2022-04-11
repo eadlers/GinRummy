@@ -4,7 +4,7 @@ import java.util.HashSet;
 public class Player {
 
     private int score;
-    private int deadWood;
+    private int deadWood;               //deadWood score will be used for increment 5
     private ArrayList<Card> hand;
     private HashSet<Card> melds;
 
@@ -67,14 +67,26 @@ public class Player {
     }
 
 
+    //Purpose: Getter
+    //Assumptions: None
+    //Inputs: None
+    //Post-conditions: Returns HashSet containing the meld cards of the player
     public HashSet<Card> getMelds() {
         return melds;
     }
 
+    //Purpose: Setter
+    //Assumptions: None
+    //Inputs: HashSet<Card> melds: HashSet to be set for the player's melds
+    //Post-conditions: Sets the HashSet
     public void setMelds(HashSet<Card> melds) {
         this.melds = melds;
     }
 
+    //Purpose: Setter / Will be used in increment 5
+    //Assumptions: None
+    //Inputs: deadWood: int value used to set deadwood of player 
+    //Post-conditions: Sets the deadwood variable to the parameter int
     public void setDeadWood(int deadWood) {
         this.deadWood = deadWood;
     }

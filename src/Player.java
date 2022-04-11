@@ -49,13 +49,6 @@ public class Player {
         this.score += score;
     }
 
-    //Purpose: Setter method
-    //Assumptions: None
-    //Inputs: None
-    //Post-conditions: Sets the score of
-    public void setScore(int score) {
-        this.score = score;
-    }
 
     //Purpose: Getter method
     //Assumptions: None
@@ -80,10 +73,6 @@ public class Player {
 
     public void setMelds(HashSet<Card> melds) {
         this.melds = melds;
-    }
-
-    public int getDeadWood() {
-        return deadWood;
     }
 
     public void setDeadWood(int deadWood) {

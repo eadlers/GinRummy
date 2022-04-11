@@ -100,7 +100,7 @@ public class Controller {
     //Purpose: Find and display the meld the player's hand
     //Assumptions: None
     //Inputs: None
-    //Post-conditions: Uses methods in Hand class to find and display the meld of the current hand of the player
+    //Post-conditions: Displays the melds the player has in the melds variable
     private void showMeld(Player player) {
         view.displayData("Melds are ");
         displayMeld(player.getMelds());

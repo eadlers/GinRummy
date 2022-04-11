@@ -23,7 +23,7 @@ public class Player {
     //Purpose: Simulate a player knocking his cards and getting 10 new ones in case his score is still not 100
     //Assumptions: Game is in progress and a dealer has already been created
     //Inputs: Dealer dealer: Dealer of the game who has the current deck
-    //Post-conditions: Hand is cleared and new cards are given to the player
+    //Post-conditions: Player's hand is cleared and set to a new, different one
     public void knock(Dealer dealer) {
         hand.clear();
         setHand(dealer.dealCards(dealer.getDeck()));

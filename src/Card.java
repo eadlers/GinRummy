@@ -1,7 +1,7 @@
 public class Card {
 
     private final String name;          //Name is the rank and suit of the card, used for displaying the cards
-    private final String rank;          //Instance variables name and suthe it will be used later on
+    private final String rank;          //Instance variables name and suit will be used later on
     private final String suit;          //final because we can't change the cards after they're created
     private final int rankNumber;       //Used to determine the rank and suit of a card
 

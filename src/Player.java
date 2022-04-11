@@ -14,8 +14,8 @@ public class Player {
     // Dealer dealer: dealer in charge of the cards
     //Deck deck: Deck of cards, can be original or modified one with current cards
     //Post-conditions: Player instance has been created
-    public Player(Dealer dealer, Deck deck) {
-        this.hand = new ArrayList<>(dealer.dealCards(deck));
+    public Player(Dealer dealer) {
+        this.hand = new ArrayList<>(dealer.dealCards(dealer.getDeck()));
         score = 0;
         deadWood = 0;
         melds = new HashSet<>();

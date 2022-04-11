@@ -5,8 +5,8 @@ public class Model {
 
     public Model() {
         dealer = new Dealer();
-        player = new Player(dealer, dealer.getDeck());
-        dealer.getDiscardPile().add(dealer.getDeck().getCards().remove(0));
+        player = new Player(dealer);
+        dealer.getDiscardPile().add(dealer.getDeck().remove(0));
     }
     //Purpose: Getter method
     //Assumptions: None

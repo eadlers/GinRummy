@@ -198,7 +198,7 @@ public class Controller {
     //Inputs: None
     //Post-conditions: Ends the game if the stock pile is empty
     private void checkStock() {
-        if (model.getDealer().getDeck().getCards().isEmpty()) {
+        if (model.getDealer().getDeck().isEmpty()) {
             view.displayData("Stock pile is empty... game has ended");
             endMessage();
         }
@@ -222,7 +222,7 @@ public class Controller {
     //Inputs: player: The player who wishes to draw a card
     //Post-conditions: Removes a card from the stock pile and adds it to the player's hand
     private void drawStock(Player player) {
-        player.getHand().add(model.getDealer().getDeck().getCards().remove(0));
+        player.getHand().add(model.getDealer().getDeck().remove(0));
     }
 
     //Purpose: Let the player choose which card the want to discard and remove it from their hand

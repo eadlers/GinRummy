@@ -41,12 +41,4 @@ public class Card {
     //Post-conditions: Returns the number of the rank of the card
     public int getRankNumber() { return rankNumber; }
 
-    //Purpose: Getter
-    //Assumptions: None
-    //Inputs: None
-    //Post-conditions: Returns the suit of the card
-    public String getSuit() {
-        return suit;
-    }
-
 }

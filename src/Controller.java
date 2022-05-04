@@ -20,12 +20,12 @@ public class Controller {
     //Post-conditions: Game is played and steps are displayed
     public void play() {
         getPlayerName();
-        System.out.println("Your name is " + model.getPlayer().getName());
         while (true) {
             view.displayData("New turn has begun");
             checkStock();                                                                                               //Check if stockpile is empty
             drawStock(model.getComputerPlayer());
-            model.getDealer().getDiscardPile().push(model.getComputerPlayer().getHand().remove(1));               //For now computer player will always discard it's first card
+            showHand(model.getComputerPlayer());
+            model.getDealer().pushToDiscardPile(model.getComputerPlayer().getHand().remove(0));                  //For now computer player will always discard it's first card
             if (askDiscard()) {                                                                                         //Draw from top of the discard or stockpiles
                 drawDiscard(model.getPlayer());
             } else {
@@ -52,8 +52,8 @@ public class Controller {
                 } else if (model.getPlayer().getDeadwoodScore() > model.getComputerPlayer().getDeadwoodScore()) {
                     model.getComputerPlayer().incrementScore(model.getPlayer().getDeadwoodScore() - model.getComputerPlayer().getDeadwoodScore());
                 }
-                model.getPlayer().knock(model.getDealer());                                                             //Knocking in increment 4 will just change the player's cards, new scoring will be added in increment 5
-                model.getComputerPlayer().knock(model.getDealer());
+                model.getPlayer().newHand(model.getDealer());                                                             //Knocking in increment 4 will just change the player's cards, new scoring will be added in increment 5
+                model.getComputerPlayer().newHand(model.getDealer());
                 model.getPlayer().resetDeadwood();
                 model.getComputerPlayer().resetDeadwood();
             }
@@ -88,7 +88,7 @@ public class Controller {
     private void getPlayerName() {
         String name;
         do {
-            name = view.getInput("What is your name?");
+            name = view.getInput("Welcome to Gin Rummy! What is your name?");
         } while (name.equals(model.getComputerPlayer().getName()));
         model.getPlayer().setName(name);
     }
@@ -277,7 +277,7 @@ public class Controller {
                 answer = 100;
             }
         } while ( answer < 1 || answer > 11);
-        model.getDealer().getDiscardPile().push(player.getHand().remove(answer - 1));
+        model.getDealer().pushToDiscardPile(player.getHand().remove(answer - 1));
     }
 
     //Purpose: Check if a player has its hand full of melds

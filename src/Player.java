@@ -37,7 +37,7 @@ public class Player {
     //Assumptions: Game is in progress and a dealer has already been created
     //Inputs: dealer: Dealer of the game who has the current deck
     //Post-conditions: Player's hand is cleared and set to a new, different one
-    public void knock(Dealer dealer) {
+    public void newHand(Dealer dealer) {
         hand.clear();
         setHand(dealer.dealCards(dealer.getDeck()));
     }

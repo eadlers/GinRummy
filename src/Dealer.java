@@ -38,6 +38,14 @@ public class Dealer {
         return discardPile;
     }
 
+    //Purpose: Push a card into the discard pile
+    //Assumptions: None
+    //Inputs: card: card to be pushed to the discard pile
+    //Post-conditions: Card is added to top of the stack
+    public void pushToDiscardPile(Card card) {
+        discardPile.push(card);
+    }
+
     //Purpose: Getter
     //Assumptions: None
     //Inputs: None

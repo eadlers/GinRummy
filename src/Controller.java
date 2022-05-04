@@ -21,16 +21,15 @@ public class Controller {
     public void play() {
         getPlayerName();
         System.out.println("Your name is " + model.getPlayer().getName());
-        model.getPlayer().setDeadWood(calculateDeadwood(model.getPlayer()));         //Set score of initial hand given to player
         boolean firstTurn = true;
-        while (model.getPlayer().getScore() < 100) {
+        while (true) {
             view.displayData("New turn has begun");
-            if (firstTurn) firstTurn = false;                                  //Do not have to calculate score if it is the first turn
-            else {
-                model.getPlayer().setDeadWood(calculateDeadwood(model.getPlayer()));
-            }
-            checkStock();                                                       //Check if stock pile is empty
-            if (askDiscard()) {                                                //Draw from top of the discard or stock piles
+            model.getPlayer().setDeadWood(calculateDeadwood(model.getPlayer()));                    //Set deadwood score of initial hand given to player
+            model.getComputerPlayer().setDeadWood(calculateDeadwood(model.getComputerPlayer()));    //Set deadwood score of computer player
+            checkStock();                                                                           //Check if stockpile is empty
+            drawStock(model.getComputerPlayer());
+            model.getDealer().getDiscardPile().push(model.getComputerPlayer().getHand().remove(1));     //For now computer player will always discard it's first card
+            if (askDiscard()) {                                                                     //Draw from top of the discard or stockpiles
                 drawDiscard(model.getPlayer());
             } else {
                 drawStock(model.getPlayer());
@@ -38,20 +37,35 @@ public class Controller {
             discard(model.getPlayer());
             findMeld(model.getPlayer());
             view.displayData(model.getPlayer().getName() + " has score " + model.getPlayer().getScore());
-            if (allMelds(model.getPlayer())) {                                  //Game ends if player has all melds
-                break;
+            if (allMelds(model.getPlayer())) {                                                      //Game ends if player has all melds
+                winMessage(model.getPlayer());
+            } else if (allMelds(model.getComputerPlayer())) {
+                winMessage(model.getComputerPlayer());
             }
             if (checkStop("Does " + model.getPlayer().getName() + " wish to knock? Enter Y for yes or N for no ")) {
-                model.getPlayer().knock(model.getDealer());                     //Knocking in increment 4 will just change the player's cards, new scoring will be added in increment 5
+                model.getPlayer().knock(model.getDealer());                                         //Knocking in increment 4 will just change the player's cards, new scoring will be added in increment 5
             }
             if (checkStop("Does " + model.getPlayer().getName() + " wish to end the game? Enter Y for yes or N for no ")) {
                 view.displayData(model.getPlayer().getName() + " chose to exit the game, thank you for playing ");
                 System.exit(0);
             }
+            if (model.getPlayer().getScore() >= 100) {
+                winMessage(model.getPlayer());
+            } else if (model.getComputerPlayer().getScore() >= 100) {
+                winMessage(model.getComputerPlayer());
+            }
         }
-        showHand(model.getPlayer());
-        showMeld(model.getPlayer());
-        view.displayData(model.getPlayer().getName() + " won with a score of  " + model.getPlayer().getScore());
+    }
+
+
+    //Purpose: State the winner and end the game
+    //Assumptions: Player has won
+    //Inputs: player: the player who has won
+    //Post-conditions:  Displays the winner and ends the game
+    private void winMessage(Player player) {
+        showHand(player);
+        showMeld(player);
+        view.displayData(player + " won with a score of  " + model.getPlayer().getScore());
         endMessage();
     }
 
@@ -176,7 +190,7 @@ public class Controller {
 
     //Purpose: Ask the player a yes/no question
     //Assumptions: None
-    //Inputs: message: The question which the user will answer yes/no to
+    //Inputs: message: The question of which the user will answer yes/no to
     //Post-conditions: Returns true if the player says yes, false otherwise
     private boolean checkStop(String message) {
         String answer;
@@ -206,10 +220,10 @@ public class Controller {
         return answer.equals("D");
     }
 
-    //Purpose: Check if the stock pile is empty
+    //Purpose: Check if the stockpile is empty
     //Assumptions: None
     //Inputs: None
-    //Post-conditions: Ends the game if the stock pile is empty
+    //Post-conditions: Ends the game if the stockpile is empty
     private void checkStock() {
         if (model.getDealer().getDeck().isEmpty()) {
             view.displayData("Stock pile is empty... game has ended");

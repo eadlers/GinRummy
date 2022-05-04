@@ -8,7 +8,7 @@ public class Model {
     public Model() {
         dealer = new Dealer();
         player = new Player(dealer);
-        computerPlayer = new Player(dealer, "Mr. Computer");
+        computerPlayer = new Player(dealer, "Computer");
         dealer.getDiscardPile().add(dealer.getDeck().remove(0));
     }
     //Purpose: Getter method

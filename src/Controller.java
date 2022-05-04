@@ -21,29 +21,41 @@ public class Controller {
     public void play() {
         getPlayerName();
         System.out.println("Your name is " + model.getPlayer().getName());
-        boolean firstTurn = true;
         while (true) {
             view.displayData("New turn has begun");
-            model.getPlayer().setDeadWood(calculateDeadwood(model.getPlayer()));                    //Set deadwood score of initial hand given to player
-            model.getComputerPlayer().setDeadWood(calculateDeadwood(model.getComputerPlayer()));    //Set deadwood score of computer player
-            checkStock();                                                                           //Check if stockpile is empty
+            checkStock();                                                                                               //Check if stockpile is empty
             drawStock(model.getComputerPlayer());
-            model.getDealer().getDiscardPile().push(model.getComputerPlayer().getHand().remove(1));     //For now computer player will always discard it's first card
-            if (askDiscard()) {                                                                     //Draw from top of the discard or stockpiles
+            model.getDealer().getDiscardPile().push(model.getComputerPlayer().getHand().remove(1));               //For now computer player will always discard it's first card
+            if (askDiscard()) {                                                                                         //Draw from top of the discard or stockpiles
                 drawDiscard(model.getPlayer());
             } else {
                 drawStock(model.getPlayer());
             }
             discard(model.getPlayer());
             findMeld(model.getPlayer());
-            view.displayData(model.getPlayer().getName() + " has score " + model.getPlayer().getScore());
-            if (allMelds(model.getPlayer())) {                                                      //Game ends if player has all melds
+            model.getPlayer().setDeadwoodScore(calculateDeadwood(model.getPlayer()));                                   //Set deadwood score of player
+            view.displayData(model.getPlayer().getName() + " has deadwood score " + model.getPlayer().getDeadwoodScore());
+            view.displayData(model.getPlayer().getName() + " has total score " + model.getPlayer().getScore());
+            System.out.println();
+            findMeld(model.getComputerPlayer());
+            model.getComputerPlayer().setDeadwoodScore(calculateDeadwood(model.getComputerPlayer()));                   //Set deadwood score of computer player
+            view.displayData((model.getComputerPlayer().getName() + " has deadwood score " + model.getComputerPlayer().getDeadwoodScore()));
+            view.displayData((model.getComputerPlayer().getName() + " has total score " + model.getComputerPlayer().getScore()));
+            if (allMelds(model.getPlayer())) {                                                                          //Game ends if player has all melds
                 winMessage(model.getPlayer());
             } else if (allMelds(model.getComputerPlayer())) {
                 winMessage(model.getComputerPlayer());
             }
             if (checkStop("Does " + model.getPlayer().getName() + " wish to knock? Enter Y for yes or N for no ")) {
-                model.getPlayer().knock(model.getDealer());                                         //Knocking in increment 4 will just change the player's cards, new scoring will be added in increment 5
+                if (model.getPlayer().getDeadwoodScore() < model.getComputerPlayer().getDeadwoodScore()) {
+                    model.getPlayer().incrementScore(model.getComputerPlayer().getDeadwoodScore() - model.getPlayer().getDeadwoodScore());
+                } else if (model.getPlayer().getDeadwoodScore() > model.getComputerPlayer().getDeadwoodScore()) {
+                    model.getComputerPlayer().incrementScore(model.getPlayer().getDeadwoodScore() - model.getComputerPlayer().getDeadwoodScore());
+                }
+                model.getPlayer().knock(model.getDealer());                                                             //Knocking in increment 4 will just change the player's cards, new scoring will be added in increment 5
+                model.getComputerPlayer().knock(model.getDealer());
+                model.getPlayer().resetDeadwood();
+                model.getComputerPlayer().resetDeadwood();
             }
             if (checkStop("Does " + model.getPlayer().getName() + " wish to end the game? Enter Y for yes or N for no ")) {
                 view.displayData(model.getPlayer().getName() + " chose to exit the game, thank you for playing ");
@@ -101,26 +113,25 @@ public class Controller {
     //Post-conditions: Returns an int value of the score of the players hand
     private int calculateDeadwood(Player player) {
         //Find melds
-        HashSet<Card> melds = findRankMeld(player.getHand());
-        //hand.displayMeld(melds);
+        int deadwoodScore = 0;
         for (Card card : player.getHand()) {
-            if (melds.contains(card)) {
+            if (player.getMelds().contains(card)) {
                 continue;
             }
             switch(card.getRank()) {
                 case "Ace":
-                    player.incrementScore(1);
+                    deadwoodScore += 1;
                     break;
                 case "Jack":
                 case "Queen":
                 case "King":
-                    player.incrementScore(10);
+                    deadwoodScore += 10;
                     break;
                 default:
-                    player.incrementScore(Integer.parseInt(card.getRank()));
+                    deadwoodScore += Integer.parseInt(card.getRank());
             }
         }
-        return player.getScore();
+        return deadwoodScore;
     }
 
 

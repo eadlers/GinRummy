@@ -19,6 +19,8 @@ public class Controller {
     //Inputs: None
     //Post-conditions: Game is played and steps are displayed
     public void play() {
+        getPlayerName();
+        System.out.println("Your name is " + model.getPlayer().getName());
         model.getPlayer().setDeadWood(calculateDeadwood(model.getPlayer()));         //Set score of initial hand given to player
         boolean firstTurn = true;
         while (model.getPlayer().getScore() < 100) {
@@ -35,31 +37,42 @@ public class Controller {
             }
             discard(model.getPlayer());
             findMeld(model.getPlayer());
-            view.displayData("Player 1 has score " + model.getPlayer().getScore());
+            view.displayData(model.getPlayer().getName() + " has score " + model.getPlayer().getScore());
             if (allMelds(model.getPlayer())) {                                  //Game ends if player has all melds
                 break;
             }
-            if (checkStop("Do you wish to knock? Enter Y for yes or N for no ")) {
+            if (checkStop("Does " + model.getPlayer().getName() + " wish to knock? Enter Y for yes or N for no ")) {
                 model.getPlayer().knock(model.getDealer());                     //Knocking in increment 4 will just change the player's cards, new scoring will be added in increment 5
             }
-            if (checkStop("Do you wish to end the game? Enter Y for yes or N for no ")) {
-                view.displayData("Player chose to exit the game, thank you for playing ");
+            if (checkStop("Does " + model.getPlayer().getName() + " wish to end the game? Enter Y for yes or N for no ")) {
+                view.displayData(model.getPlayer().getName() + " chose to exit the game, thank you for playing ");
                 System.exit(0);
             }
         }
         showHand(model.getPlayer());
         showMeld(model.getPlayer());
-        view.displayData("Player1 won with a score of  " + model.getPlayer().getScore());
+        view.displayData(model.getPlayer().getName() + " won with a score of  " + model.getPlayer().getScore());
         endMessage();
     }
 
+    //Purpose:Get the players name
+    //Assumptions: Player name is not the same as computer player
+    //Inputs: None
+    //Post-conditions: name variable for player will be updated
+    private void getPlayerName() {
+        String name;
+        do {
+            name = view.getInput("What is your name?");
+        } while (name.equals(model.getComputerPlayer().getName()));
+        model.getPlayer().setName(name);
+    }
 
     //Purpose: Check if player wants to quit the application or start a new game
     //Assumptions: Game has ended
     //Inputs: None
     //Post-conditions: Starts a new game if player chooses to or ends the application
     private void endMessage() {
-        if (checkStop("Do you wish to start a new game? Enter Y for yes or N for no ")) {
+        if (checkStop("Does " + model.getPlayer().getName() + " wish to start a new game? Enter Y for yes or N for no ")) {
             Controller controller = new Controller();
             controller.play();
         } else {
@@ -102,16 +115,16 @@ public class Controller {
     //Inputs: None
     //Post-conditions: Displays the melds the player has in the melds variable
     private void showMeld(Player player) {
-        view.displayData("Melds are ");
+        view.displayData("Melds for " + player.getName() + " are ");
         displayMeld(player.getMelds());
     }
 
     private void findMeld(Player player) {
         HashSet<Card> rankMeld = findRankMeld(player.getHand());
-        view.displayData("Rank melds are ");
+        view.displayData(player.getName() + "'s Rank melds are ");
         displayMeld(rankMeld);
         HashSet<Card> runMeld = findRunMeld(player.getHand(), rankMeld);
-        view.displayData("Run melds are ");
+        view.displayData(player.getName() + "'s Run melds are ");
         displayMeld(runMeld);
         player.setMelds(runMeld);
     }
@@ -154,7 +167,7 @@ public class Controller {
     //Inputs: None
     //Post-conditions: Displays each card the player has (suit and rank)
     private void showHand(Player player) {
-        view.displayData("Player has hand");
+        view.displayData(player.getName() + " has hand");
         for (int i = 0; i < player.getHand().size(); i++) {
             view.displayData((i + 1) + ". [" + player.getHand().get(i).getName() + "] ");
         }
@@ -217,10 +230,10 @@ public class Controller {
         }
     }
 
-    //Purpose: Let the player draw a card from the stock pile
+    //Purpose: Let the player draw a card from the stockpile
     //Assumptions: Stock pile is not empty
     //Inputs: player: The player who wishes to draw a card
-    //Post-conditions: Removes a card from the stock pile and adds it to the player's hand
+    //Post-conditions: Removes a card from the stockpile and adds it to the player's hand
     private void drawStock(Player player) {
         player.getHand().add(model.getDealer().getDeck().remove(0));
     }
@@ -242,7 +255,7 @@ public class Controller {
         model.getDealer().getDiscardPile().push(player.getHand().remove(answer - 1));
     }
 
-    //Purpose: Check if a player has a hand full of melds
+    //Purpose: Check if a player has its hand full of melds
     //Assumptions: None
     //Inputs: player: Player whose hand must be checked
     //Post-conditions: Returns true if the player's melds are 10 (hand size), else returns false

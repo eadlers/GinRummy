@@ -1,11 +1,14 @@
 public class Model {
 
-    private Dealer dealer;                             //Could be a singleton object later on
+    private final Dealer dealer;                             //Could be a singleton object later on
     private Player player;      //Only one player for increment 1, will probably need an array of players for multi-player addition
+    private Player computerPlayer;
+
 
     public Model() {
         dealer = new Dealer();
         player = new Player(dealer);
+        computerPlayer = new Player(dealer, "Mr. Computer");
         dealer.getDiscardPile().add(dealer.getDeck().remove(0));
     }
     //Purpose: Getter method
@@ -22,6 +25,14 @@ public class Model {
     //Post-conditions: Returns the dealer object
     public Dealer getDealer() {
         return dealer;
+    }
+
+    //Purpose: Getter method
+    //Assumptions: None
+    //Inputs: player: computerPlayer object
+    //Post-conditions: Returns computerPlayer object
+    public Player getComputerPlayer() {
+        return computerPlayer;
     }
 
 

@@ -7,11 +7,12 @@ public class Player {
     private int deadWood;               //deadWood score will be used for increment 5
     private ArrayList<Card> hand;
     private HashSet<Card> melds;
+    private String name;
 
     //Purpose: Constructor for a player
     //Assumptions: Dealer has been created
     //Inputs:
-    // Dealer dealer: dealer in charge of the cards
+    // dealer: dealer in charge of the cards
     //Post-conditions: Player instance has been created
     public Player(Dealer dealer) {
         this.hand = new ArrayList<>(dealer.dealCards(dealer.getDeck()));
@@ -20,9 +21,17 @@ public class Player {
         melds = new HashSet<>();
     }
 
+    public Player(Dealer dealer, String name) {
+        this.hand = new ArrayList<>(dealer.dealCards(dealer.getDeck()));
+        score = 0;
+        deadWood = 0;
+        melds = new HashSet<>();
+        this.name = name;
+    }
+
     //Purpose: Simulate a player knocking his cards and getting 10 new ones in case his score is still not 100
     //Assumptions: Game is in progress and a dealer has already been created
-    //Inputs: Dealer dealer: Dealer of the game who has the current deck
+    //Inputs: dealer: Dealer of the game who has the current deck
     //Post-conditions: Player's hand is cleared and set to a new, different one
     public void knock(Dealer dealer) {
         hand.clear();
@@ -88,5 +97,13 @@ public class Player {
     //Post-conditions: Sets the deadwood variable to the parameter int
     public void setDeadWood(int deadWood) {
         this.deadWood = deadWood;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }

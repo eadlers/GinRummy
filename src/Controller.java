@@ -22,37 +22,39 @@ public class Controller {
         getPlayerName();
         while (true) {
             view.displayData("New turn has begun");
-            checkStock();                                                                                               //Check if stockpile is empty
+            checkStock();                                                                               //Check if stockpile is empty
             drawStock(model.getComputerPlayer());
             showHand(model.getComputerPlayer());
-            model.getDealer().pushToDiscardPile(model.getComputerPlayer().getHand().remove(0));                  //For now computer player will always discard it's first card
-            if (askDiscard()) {                                                                                         //Draw from top of the discard or stockpiles
+            model.getDealer().pushToDiscardPile(model.getComputerPlayer().getHand().remove(0));  //For now computer player will always discard it's first card
+            if (askDiscard()) {                                                                        //Draw from top of the discard or stockpiles
                 drawDiscard(model.getPlayer());
             } else {
                 drawStock(model.getPlayer());
             }
             discard(model.getPlayer());
             findMeld(model.getPlayer());
-            model.getPlayer().setDeadwoodScore(calculateDeadwood(model.getPlayer()));                                   //Set deadwood score of player
+            model.getPlayer().setDeadwoodScore(calculateDeadwood(model.getPlayer()));                  //Set deadwood score of player
             view.displayData(model.getPlayer().getName() + " has deadwood score " + model.getPlayer().getDeadwoodScore());
             view.displayData(model.getPlayer().getName() + " has total score " + model.getPlayer().getScore());
             System.out.println();
             findMeld(model.getComputerPlayer());
-            model.getComputerPlayer().setDeadwoodScore(calculateDeadwood(model.getComputerPlayer()));                   //Set deadwood score of computer player
-            view.displayData((model.getComputerPlayer().getName() + " has deadwood score " + model.getComputerPlayer().getDeadwoodScore()));
+            model.getComputerPlayer().setDeadwoodScore(calculateDeadwood(model.getComputerPlayer()));   //Set deadwood score of computer player
             view.displayData((model.getComputerPlayer().getName() + " has total score " + model.getComputerPlayer().getScore()));
-            if (allMelds(model.getPlayer())) {                                                                          //Game ends if player has all melds
+            if (allMelds(model.getPlayer())) {                                                          //Game ends if player has all melds
                 winMessage(model.getPlayer());
             } else if (allMelds(model.getComputerPlayer())) {
                 winMessage(model.getComputerPlayer());
             }
             if (checkStop("Does " + model.getPlayer().getName() + " wish to knock? Enter Y for yes or N for no ")) {
                 if (model.getPlayer().getDeadwoodScore() < model.getComputerPlayer().getDeadwoodScore()) {
+                    view.displayData(model.getPlayer().getName() + " wins the hand");
                     model.getPlayer().incrementScore(model.getComputerPlayer().getDeadwoodScore() - model.getPlayer().getDeadwoodScore());
                 } else if (model.getPlayer().getDeadwoodScore() > model.getComputerPlayer().getDeadwoodScore()) {
+                    view.displayData(model.getComputerPlayer().getName() + " wins the hand");
                     model.getComputerPlayer().incrementScore(model.getPlayer().getDeadwoodScore() - model.getComputerPlayer().getDeadwoodScore());
                 }
-                model.getPlayer().newHand(model.getDealer());                                                             //Knocking in increment 4 will just change the player's cards, new scoring will be added in increment 5
+                model.getDealer().knock();
+                model.getPlayer().newHand(model.getDealer());
                 model.getComputerPlayer().newHand(model.getDealer());
                 model.getPlayer().resetDeadwood();
                 model.getComputerPlayer().resetDeadwood();

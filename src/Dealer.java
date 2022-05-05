@@ -16,6 +16,11 @@ public class Dealer {
         discardPile = new Stack<>();
     }
 
+    public void knock() {
+        deck.clear();
+        deck = createDeck();
+    }
+
     //Purpose: Shuffle the deck and give 10 cards to the player
     //Assumptions: None
     //Inputs: ArrayList<Card> deck : deck of cards the dealer has

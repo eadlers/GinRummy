@@ -45,21 +45,8 @@ public class Controller {
             } else if (allMelds(model.getComputerPlayer())) {
                 winMessage(model.getComputerPlayer());
             }
-            if (checkStop("Does " + model.getPlayer().getName() + " wish to knock? Enter Y for yes or N for no ")) {
-                if (model.getPlayer().getDeadwoodScore() < model.getComputerPlayer().getDeadwoodScore()) {
-                    view.displayData(model.getPlayer().getName() + " wins the hand");
-                    model.getPlayer().incrementScore(model.getComputerPlayer().getDeadwoodScore() - model.getPlayer().getDeadwoodScore());
-                } else if (model.getPlayer().getDeadwoodScore() > model.getComputerPlayer().getDeadwoodScore()) {
-                    view.displayData(model.getComputerPlayer().getName() + " wins the hand");
-                    model.getComputerPlayer().incrementScore(model.getPlayer().getDeadwoodScore() - model.getComputerPlayer().getDeadwoodScore());
-                }
-                model.getDealer().knock();
-                model.getPlayer().newHand(model.getDealer());
-                model.getComputerPlayer().newHand(model.getDealer());
-                model.getPlayer().resetDeadwood();
-                model.getComputerPlayer().resetDeadwood();
-            }
-            if (checkStop("Does " + model.getPlayer().getName() + " wish to end the game? Enter Y for yes or N for no ")) {
+            knock(model.getPlayer(), model.getComputerPlayer(), model.getDealer());
+            if (getAnswer("Does " + model.getPlayer().getName() + " wish to end the game? Enter Y for yes or N for no ")) {
                 view.displayData(model.getPlayer().getName() + " chose to exit the game, thank you for playing ");
                 System.exit(0);
             }
@@ -68,6 +55,28 @@ public class Controller {
             } else if (model.getComputerPlayer().getScore() >= 100) {
                 winMessage(model.getComputerPlayer());
             }
+        }
+    }
+
+
+    //Purpose: Ask and simulate knocking between two players
+    //Assumptions: None
+    //Inputs: player: player who must choose to knock
+    //Post-conditions: Winner has score variable updated, hands are reset, dealer gets new deck
+    private void knock(Player player, Player computer, Dealer dealer) {
+        if (getAnswer("Does " + player.getName() + " wish to knock? Enter Y for yes or N for no ")) {
+            if (player.getDeadwoodScore() < computer.getDeadwoodScore()) {
+                view.displayData(player.getName() + " wins the hand");
+                player.incrementScore(computer.getDeadwoodScore() - player.getDeadwoodScore());
+            } else if (player.getDeadwoodScore() > computer.getDeadwoodScore()) {
+                view.displayData(computer.getName() + " wins the hand");
+                computer.incrementScore(player.getDeadwoodScore() - computer.getDeadwoodScore());
+            }
+            dealer.knock();
+            player.newHand(dealer);
+            computer.newHand(model.getDealer());
+            player.resetDeadwood();
+            computer.resetDeadwood();
         }
     }
 
@@ -100,7 +109,7 @@ public class Controller {
     //Inputs: None
     //Post-conditions: Starts a new game if player chooses to or ends the application
     private void endMessage() {
-        if (checkStop("Does " + model.getPlayer().getName() + " wish to start a new game? Enter Y for yes or N for no ")) {
+        if (getAnswer("Does " + model.getPlayer().getName() + " wish to start a new game? Enter Y for yes or N for no ")) {
             Controller controller = new Controller();
             controller.play();
         } else {
@@ -205,7 +214,7 @@ public class Controller {
     //Assumptions: None
     //Inputs: message: The question of which the user will answer yes/no to
     //Post-conditions: Returns true if the player says yes, false otherwise
-    private boolean checkStop(String message) {
+    private boolean getAnswer(String message) {
         String answer;
         do {
             answer = view.getInput(message);

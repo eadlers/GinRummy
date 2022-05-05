@@ -146,10 +146,10 @@ public class Controller {
 
     private void findMeld(Player player) {
         HashSet<Card> rankMeld = findRankMeld(player.getHand());
-        view.displayData(player.getName() + "'s Rank melds are ");
+        view.displayData(player.getName() + "'s Rank melds are: ");
         displayMeld(rankMeld);
         HashSet<Card> runMeld = findRunMeld(player.getHand(), rankMeld);
-        view.displayData(player.getName() + "'s Run melds are ");
+        view.displayData(player.getName() + "'s total melds are: ");
         displayMeld(runMeld);
         player.setMelds(runMeld);
     }

@@ -48,11 +48,11 @@ public class MeldTracker {
         ArrayList<Card> sortedByRank = new ArrayList<>(hand);
         sortedByRank.removeIf(melds::contains);
         sortedByRank.sort(Comparator.comparing(Card::getRankNumber));           //Sort hand by rank number so it is easier to find runs
-        for (int i = 0; i < sortedByRank.size() - 3; i++) {
+        for (int i = 0; i < sortedByRank.size() - 2; i++) {
             Card first = sortedByRank.get(i);
             Card second = sortedByRank.get(i + 1);
             Card third = sortedByRank.get(i + 2);
-            if ((first.getRankNumber() - second.getRankNumber() == -1) && (first.getRank().equals(second.getRank())) && (second.getRankNumber() - third.getRankNumber() == -1) && (second.getRank().equals(third.getRank()))) {
+            if (first.getRankNumber() == second.getRankNumber() - 1 && first.getSuit().equals(second.getSuit()) && second.getRankNumber() == third.getRankNumber() - 1 && second.getSuit().equals(third.getSuit())) {
                 melds.add(first);
                 melds.add(second);
                 melds.add(third);

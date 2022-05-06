@@ -19,7 +19,7 @@ public class Controller {
     //Inputs: None
     //Post-conditions: Game is played and steps are displayed
     public void play() {
-        getPlayerName();
+        getPlayerName(model.getPlayer(), model.getComputerPlayer());
         while (true) {
             view.displayData("New turn has begun");
             checkStock();                                                                               //Check if stockpile is empty
@@ -109,12 +109,12 @@ public class Controller {
     //Assumptions: Player name is not the same as computer player
     //Inputs: None
     //Post-conditions: name variable for player will be updated
-    private void getPlayerName() {
+    private void getPlayerName(Player player1, Player player2) {
         String name;
         do {
             name = view.getInput("Welcome to Gin Rummy! What is your name?");
-        } while (name.equals(model.getComputerPlayer().getName()));
-        model.getPlayer().setName(name);
+        } while (name.equals(player2.getName()));
+        player1.setName(name);
     }
 
     //Purpose: Check if player wants to quit the application or start a new game

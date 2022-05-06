@@ -19,14 +19,6 @@ public class View {
         return input.getInput();
     }
 
-    //Purpose: Display data
-    //Assumptions: None
-    //Inputs: object: data to be displayed
-    //Post-conditions: Calls the viewOutput class in order to display an object to the user
-    public void displayData(Object data) {
-        output.displayData(data);
-    }
-
     //Purpose: Display string data
     //Assumptions: None
     //Inputs: text: string to be displayed

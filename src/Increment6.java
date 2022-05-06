@@ -1,4 +1,4 @@
-public class Increment4 {
+public class Increment6 {
 
     //Purpose: Main method
     //Assumptions: None

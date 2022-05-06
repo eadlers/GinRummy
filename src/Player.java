@@ -74,15 +74,6 @@ public class Player {
     }
 
 
-    //Purpose: Increment deadwood score variable
-    //Assumptions: None
-    //Inputs: score: Amount to add to score
-    //Post-conditions: deadwoodScore variable is updated
-    public void incrementDeadwoodScore(int score) {
-        this.deadwoodScore += score;
-    }
-
-
     //Purpose: Getter
     //Assumptions: None
     //Inputs: None

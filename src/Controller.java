@@ -32,14 +32,7 @@ public class Controller {
                 drawStock(model.getPlayer());
             }
             discard(model.getPlayer());
-            findMeld(model.getPlayer());
-            model.getPlayer().setDeadwoodScore(calculateDeadwood(model.getPlayer()));                  //Set deadwood score of player
-            view.displayData(model.getPlayer().getName() + " has deadwood score " + model.getPlayer().getDeadwoodScore());
-            view.displayData(model.getPlayer().getName() + " has total score " + model.getPlayer().getScore());
-            System.out.println();
-            findMeld(model.getComputerPlayer());
-            model.getComputerPlayer().setDeadwoodScore(calculateDeadwood(model.getComputerPlayer()));   //Set deadwood score of computer player
-            view.displayData((model.getComputerPlayer().getName() + " has total score " + model.getComputerPlayer().getScore()));
+            findDeadwood(model.getPlayer(), model.getComputerPlayer());
             if (allMelds(model.getPlayer())) {                                                          //Game ends if player has all melds
                 winMessage(model.getPlayer());
             } else if (allMelds(model.getComputerPlayer())) {
@@ -59,24 +52,44 @@ public class Controller {
     }
 
 
+
+    //Purpose: Find melds and set deadwood score for two players
+    //Assumptions: Calls other methods in Controller class
+    //Inputs: player1: GinRummy player
+    //        player2: GinRummy player, in this case it is the computer player
+    //Post-conditions: Deadwood score for both players is updated. Melds are displayed
+    private void findDeadwood(Player player1, Player player2) {
+        findMeld(player1);
+        player1.setDeadwoodScore(calculateDeadwood(player1));                  //Set deadwood score of player
+        view.displayData(player1.getName() + " has deadwood score " + player1.getDeadwoodScore());
+        view.displayData(player1.getName() + " has total score " + player1.getScore());
+        System.out.println();
+        findMeld(player2);
+        player2.setDeadwoodScore(calculateDeadwood(player2));   //Set deadwood score of computer player
+        view.displayData((player2.getName() + " has total score " + player2.getScore()));
+    }
+
+
     //Purpose: Ask and simulate knocking between two players
     //Assumptions: None
     //Inputs: player: player who must choose to knock
+    //        player2: second player, in our case computer player
+    //        dealer: dealer of the match
     //Post-conditions: Winner has score variable updated, hands are reset, dealer gets new deck
-    private void knock(Player player, Player computer, Dealer dealer) {
+    private void knock(Player player, Player player2, Dealer dealer) {
         if (getAnswer("Does " + player.getName() + " wish to knock? Enter Y for yes or N for no ")) {
-            if (player.getDeadwoodScore() < computer.getDeadwoodScore()) {
+            if (player.getDeadwoodScore() < player2.getDeadwoodScore()) {
                 view.displayData(player.getName() + " wins the hand");
-                player.incrementScore(computer.getDeadwoodScore() - player.getDeadwoodScore());
-            } else if (player.getDeadwoodScore() > computer.getDeadwoodScore()) {
-                view.displayData(computer.getName() + " wins the hand");
-                computer.incrementScore(player.getDeadwoodScore() - computer.getDeadwoodScore());
+                player.incrementScore(player2.getDeadwoodScore() - player.getDeadwoodScore());
+            } else if (player.getDeadwoodScore() > player2.getDeadwoodScore()) {
+                view.displayData(player2.getName() + " wins the hand");
+                player2.incrementScore(player.getDeadwoodScore() - player2.getDeadwoodScore());
             }
             dealer.knock();
             player.newHand(dealer);
-            computer.newHand(model.getDealer());
+            player2.newHand(model.getDealer());
             player.resetDeadwood();
-            computer.resetDeadwood();
+            player2.resetDeadwood();
         }
     }
 

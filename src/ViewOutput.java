@@ -8,11 +8,4 @@ public class ViewOutput {
         System.out.println(text);
     }
 
-    //Purpose: Display an object to the user
-    //Assumptions: None
-    //Inputs: o: object ot be displayed to the user
-    //Post-conditions: Displays the given object to the user
-    public void displayData(Object o ) {
-        System.out.println(o);
-    }
 }

@@ -16,6 +16,11 @@ public class Dealer {
         discardPile = new Stack<>();
     }
 
+
+    //Purpose: Clear deck and create a new one with a new deck
+    //Assumptions: None
+    //Inputs: None
+    //Post-conditions: Dealer now has a new deck
     public void knock() {
         deck.clear();
         deck = createDeck();
@@ -59,6 +64,11 @@ public class Dealer {
         return deck;
     }
 
+
+    //Purpose: Create a full deck of 52 cards
+    //Assumptions: None
+    //Inputs: None
+    //Post-conditions: Deck of cards is created and returned
     private ArrayList<Card> createDeck() {
         deck = new ArrayList<>(52);
         String[] ranks = {"Ace" , "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};

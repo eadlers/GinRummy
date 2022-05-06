@@ -21,6 +21,13 @@ public class Player {
         melds = new HashSet<>();
     }
 
+
+    //Purpose: Constructor for a player. Used when name is default
+    //Assumptions: Dealer has been created, this will be for the computer player
+    //Inputs:
+    // dealer: dealer in charge of the cards
+    // name: Name of the player
+    //Post-conditions: Player instance has been created
     public Player(Dealer dealer, String name) {
         this.hand = new ArrayList<>(dealer.dealCards(dealer.getDeck()));
         score = 0;
@@ -29,6 +36,11 @@ public class Player {
         this.name = name;
     }
 
+
+    //Purpose: Reset the deadwood score of the player
+    //Assumptions: None
+    //Inputs: None
+    //Post-conditions: Deadwood variable is set to 0
     public void resetDeadwood() {
         deadwoodScore = 0;
     }
@@ -61,10 +73,20 @@ public class Player {
         this.score += score;
     }
 
+
+    //Purpose: Increment deadwood score variable
+    //Assumptions: None
+    //Inputs: score: Amount to add to score
+    //Post-conditions: deadwoodScore variable is updated
     public void incrementDeadwoodScore(int score) {
         this.deadwoodScore += score;
     }
 
+
+    //Purpose: Getter
+    //Assumptions: None
+    //Inputs: None
+    //Post-conditions: Returns deadwoodScore variable
     public int getDeadwoodScore() {
         return deadwoodScore;
     }
@@ -111,10 +133,20 @@ public class Player {
         this.deadwoodScore = deadwoodScore;
     }
 
+
+    //Purpose: Setter
+    //Assumptions: None
+    //Inputs: name: name to be assigned to player
+    //Post-conditions: Updated the name variable of a player
     public void setName(String name) {
         this.name = name;
     }
 
+
+    //Purpose: Getter
+    //Assumptions: None
+    //Inputs: None
+    //Post-conditions: Returns the name variable of a player
     public String getName() {
         return name;
     }

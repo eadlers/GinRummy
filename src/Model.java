@@ -1,7 +1,7 @@
 public class Model {
 
-    private final Dealer dealer;                             //Could be a singleton object later on
-    private Player player;      //Only one player for increment 1, will probably need an array of players for multi-player addition
+    private final Dealer dealer;
+    private Player player;
     private Player computerPlayer;
 
 

@@ -46,5 +46,9 @@ public class Model {
         playerInfo.setPlayerName("2",player2);
     }
 
+    public void storeDeadwood(int player1, int player2) {
+        playerInfo.setPlayerDeadwood("1", player1);
+        playerInfo.setPlayerDeadwood("2", player2);
+    }
 
 }

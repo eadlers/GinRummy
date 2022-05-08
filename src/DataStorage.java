@@ -39,10 +39,8 @@ public class DataStorage {
             System.out.println("Player id not in XML DOM.");
         } else {
             System.out.println("Found player id in XML DOM");
-            System.out.println(player);
             System.out.println(player.getElementsByTagName(NAME_TAG_NAME).item(0));
             player.getElementsByTagName(NAME_TAG_NAME).item(0).setTextContent(name);
-            System.out.println(player.getElementsByTagName(NAME_TAG_NAME).item(0));
             System.out.println(player.getElementsByTagName(NAME_TAG_NAME).item(0).getTextContent());
         }
     }
@@ -62,7 +60,9 @@ public class DataStorage {
             System.out.println("Player id not in XML DOM.");
         } else {
             System.out.println("Found player id in XML DOM");
+            System.out.println(player.getElementsByTagName(score_tag_name).item(0));
             player.getElementsByTagName(score_tag_name).item(0).setTextContent(Integer.toString(score));
+            System.out.println(player.getElementsByTagName(score_tag_name).item(0).getTextContent());
         }
     }
 

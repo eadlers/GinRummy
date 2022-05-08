@@ -34,6 +34,7 @@ public class Controller {
             }
             discard(model.getPlayer());
             findDeadwood(model.getPlayer(), model.getComputerPlayer());
+            model.storeDeadwood(model.getPlayer().getDeadwoodScore(), model.getComputerPlayer().getDeadwoodScore());
             if (allMelds(model.getPlayer())) {                                                          //Game ends if player has all melds
                 winMessage(model.getPlayer());
             } else if (allMelds(model.getComputerPlayer())) {

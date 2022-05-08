@@ -1,9 +1,19 @@
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
+import java.io.*;
+import java.util.*;
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.*;
+import javax.xml.transform.stream.*;
+import org.w3c.dom.*;
+import org.xml.sax.*;
 
 public class DataStorage {
 
     Document dom;
+
+    final String PLAYER_OUTPUT_FILENAME = "players_output.xml";
 
     final String PLAYER_TAG_NAME = "player";
     final String NAME_TAG_NAME = "name";
@@ -122,6 +132,20 @@ public class DataStorage {
             }
         }
         return childNode;
+    }
+
+    public void saveDOMtoXML()
+    {
+        try
+        {
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            DOMSource source = new DOMSource(dom);
+            StreamResult result = new StreamResult(new File(PLAYER_OUTPUT_FILENAME));
+            transformer.transform(source, result);
+        } catch (TransformerFactoryConfigurationError | TransformerException ignored)
+        {
+        }
     }
 
 

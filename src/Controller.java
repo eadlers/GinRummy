@@ -41,6 +41,7 @@ public class Controller {
                 winMessage(model.getComputerPlayer());
             }
             knock(model.getPlayer(), model.getComputerPlayer(), model.getDealer());                     //Ask and knock if desired
+            model.storeScore(model.getPlayer().getScore(), model.getComputerPlayer().getScore());
             if (getAnswer("Does " + model.getPlayer().getName() + " wish to end the game? Enter Y for yes or N for no ")) {
                 view.displayData(model.getPlayer().getName() + " chose to exit the game, thank you for playing ");
                 System.exit(0);

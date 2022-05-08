@@ -9,6 +9,7 @@ public class DataStorage {
     final String NAME_TAG_NAME = "name";
     final String DEADWOOD_TAG_NAME = "deadwoodScore";
     final String SCORE_TAG_NAME = "score";
+    final String ID_TAG_NAME = "playerId";
 
     public DataStorage(String filename) {
         dom = createDOM(filename);
@@ -38,7 +39,11 @@ public class DataStorage {
             System.out.println("Player id not in XML DOM.");
         } else {
             System.out.println("Found player id in XML DOM");
-            docElement.getElementsByTagName(NAME_TAG_NAME).item(0).setNodeValue(name);
+            System.out.println(player);
+            System.out.println(player.getElementsByTagName(NAME_TAG_NAME).item(0));
+            player.getElementsByTagName(NAME_TAG_NAME).item(0).setTextContent(name);
+            System.out.println(player.getElementsByTagName(NAME_TAG_NAME).item(0));
+            System.out.println(player.getElementsByTagName(NAME_TAG_NAME).item(0).getTextContent());
         }
     }
 
@@ -57,14 +62,14 @@ public class DataStorage {
             System.out.println("Player id not in XML DOM.");
         } else {
             System.out.println("Found player id in XML DOM");
-            docElement.getElementsByTagName(score_tag_name).item(0).setNodeValue(Integer.toString(score));
+            player.getElementsByTagName(score_tag_name).item(0).setTextContent(Integer.toString(score));
         }
     }
 
 
     private Element findPlayerElement(Element docElement, String playerId) {
         NodeList nodes = docElement.getElementsByTagName(PLAYER_TAG_NAME);
-        Element playerNode = findElement(nodes, PLAYER_TAG_NAME, playerId);
+        Element playerNode = findElement(nodes, ID_TAG_NAME, playerId);
         return playerNode;
     }
 

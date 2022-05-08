@@ -41,5 +41,10 @@ public class Model {
         return playerInfo;
     }
 
+    public void storeNames(String player1, String player2) {
+        playerInfo.setPlayerName("1", player1);
+        playerInfo.setPlayerName("2",player2);
+    }
+
 
 }

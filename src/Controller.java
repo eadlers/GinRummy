@@ -20,6 +20,7 @@ public class Controller {
     //Post-conditions: Game is played and steps are displayed
     public void play() {
         getPlayerName(model.getPlayer(), model.getComputerPlayer());
+        model.storeNames(model.getPlayer().getName(), model.getComputerPlayer().getName());
         while (true) {
             view.displayData("New turn has begun");
             checkStock();                                                                               //Check if stockpile is empty

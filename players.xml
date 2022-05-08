@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <players>
-    <player id="1">
+    <player>
+        <playerId>1</playerId>
         <name></name>
         <deadwoodScore></deadwoodScore>
         <score></score>
     </player>
-    <player id="2">
+    <player>
+        <playerId>2</playerId>
         <name></name>
         <deadwoodScore></deadwoodScore>
         <score></score>

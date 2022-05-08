@@ -104,7 +104,7 @@ public class Controller {
     private void winMessage(Player player) {
         showHand(player);
         showMeld(player);
-        view.displayData(player + " won with a score of  " + model.getPlayer().getScore());
+        view.displayData(player.getName() + " won with a score of  " + model.getPlayer().getScore());
         endMessage();
     }
 

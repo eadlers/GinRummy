@@ -41,18 +41,30 @@ public class Model {
         return playerInfo;
     }
 
+    //Purpose: Store the player's name in the DOM
+    //Assumptions: None
+    //Inputs: player1, player2: Players whose names will be stored
+    //Post-conditions: DOM info is updated
     public void storeNames(String player1, String player2) {
         playerInfo.setPlayerName("1", player1);
         playerInfo.setPlayerName("2",player2);
         playerInfo.saveDOMtoXML();
     }
 
+    //Purpose: Store the deadwood of each player in the DOM
+    //Assumptions: None
+    //Inputs: player1, player2: Players whose deadwood score will be stored
+    //Post-conditions: DOM info is updated
     public void storeDeadwood(int player1, int player2) {
         playerInfo.setPlayerDeadwood("1", player1);
         playerInfo.setPlayerDeadwood("2", player2);
         playerInfo.saveDOMtoXML();
     }
 
+    //Purpose: Store the score of each player in the DOM
+    //Assumptions: None
+    //Inputs: player1, player2: Players whose score will be stored
+    //Post-conditions: DOM info is updated
     public void storeScore(int player1, int player2) {
         playerInfo.setPlayerScore("1", player1);
         playerInfo.setPlayerScore("2", player2);

@@ -171,6 +171,11 @@ public class Controller {
         displayMeld(player.getMelds());
     }
 
+
+    //Purpose: Find the total meld of a player
+    //Assumptions: None
+    //Inputs: player: Player instance whose meld must be found
+    //Post-conditions: Player melds instance variable is updated
     private void findMeld(Player player) {
         HashSet<Card> rankMeld = findRankMeld(player.getHand());
         view.displayData(player.getName() + "'s Rank melds are: ");

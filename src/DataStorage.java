@@ -39,6 +39,12 @@ public class DataStorage {
         return dom;
     }
 
+
+    //Purpose: Set the text content of the player tag
+    //Assumptions: None
+    //Inputs: id: id of the player
+    //        name: name to be set in the DOM
+    //Post-conditions: DOM is updated. Name tag has new text content
     public void setPlayerName(String id, String name) {
         Element docElement = dom.getDocumentElement();
         Element player = findPlayerElement(docElement, id);
@@ -46,20 +52,38 @@ public class DataStorage {
             System.out.println("Player id not in XML DOM.");
         } else {
             System.out.println("Found player id in XML DOM");
-            System.out.println(player.getElementsByTagName(NAME_TAG_NAME).item(0));
             player.getElementsByTagName(NAME_TAG_NAME).item(0).setTextContent(name);
-            System.out.println(player.getElementsByTagName(NAME_TAG_NAME).item(0).getTextContent());
+            System.out.println("Name: " + player.getElementsByTagName(NAME_TAG_NAME).item(0).getTextContent());
         }
     }
 
+
+    //Purpose: Set the deadwood of a player in the DOM
+    //Assumptions: None
+    //Inputs: id: id of the player
+    //        deadwood: deadwood to be added to the DOM
+    //Post-conditions: DOM is updated. deadwood tag has new text content
     public void setPlayerDeadwood(String id, int deadwood) {
         setScore(id, deadwood, DEADWOOD_TAG_NAME);
     }
 
+
+    //Purpose: Set the score of a player in the DOM
+    //Assumptions: None
+    //Inputs: id: id of the player
+    //        score: score to be added to the DOM
+    //Post-conditions: DOM is updated. score tag has a new text content
     public void setPlayerScore(String id, int score) {
         setScore(id, score, SCORE_TAG_NAME);
     }
 
+
+    //Purpose: Set the score of a player in the DOM (deadwood or score)
+    //Assumptions: None
+    //Inputs: id: id of the player
+    //        score: score to be added to the DOM
+    //        score_tag_name: either deadwood or score
+    //Post-conditions: DOM is updated
     private void setScore(String id, int score, String score_tag_name) {
         Element docElement = dom.getDocumentElement();
         Element player = findPlayerElement(docElement, id);
@@ -67,19 +91,30 @@ public class DataStorage {
             System.out.println("Player id not in XML DOM.");
         } else {
             System.out.println("Found player id in XML DOM");
-            System.out.println(player.getElementsByTagName(score_tag_name).item(0));
             player.getElementsByTagName(score_tag_name).item(0).setTextContent(Integer.toString(score));
-            System.out.println(player.getElementsByTagName(score_tag_name).item(0).getTextContent());
+            System.out.println(score_tag_name + ": " + player.getElementsByTagName(score_tag_name).item(0).getTextContent());
         }
     }
 
 
+
+    //Purpose: Find a player node by looking for its id
+    //Assumptions: None
+    //Inputs: docElement: root node of the DOM
+    //        playerID: text in playerid tag
+    //Post-conditions: returns a contact node object if player is found, else null
     private Element findPlayerElement(Element docElement, String playerId) {
         NodeList nodes = docElement.getElementsByTagName(PLAYER_TAG_NAME);
         Element playerNode = findElement(nodes, ID_TAG_NAME, playerId);
         return playerNode;
     }
 
+
+    //Purpose: Find an element in the DOM
+    //Assumptions: None
+    //Inputs: nodes: list of sibling nodes with same tag name
+    //        tagName, tagValue: child tags within one of the sibling nodes
+    //Post-conditions: Returns the sibling node object, null otherwise
     private Element findElement(NodeList nodes, String tagName, String tagValue)
     {
         Element element = null;
@@ -99,6 +134,12 @@ public class DataStorage {
         return element;
     }
 
+
+    //Purpose: Find the child element within a parent node
+    //Assumptions: None
+    //Inputs: parent node: node that has child nodes
+    //        tagName, tagValue: child tags within the parent node
+    //Post-conditions: Returns child node matching the tag names and values, or null
     private Node findChildElement(Element parentNode, String tagName, String tagValue)
     {
         Node childNode = null;
@@ -131,6 +172,11 @@ public class DataStorage {
         return childNode;
     }
 
+
+    //Purpose: Save current DOM to our specified XML file
+    //Assumptions: XML file is in project directory
+    //Inputs: None
+    //Post-conditions: XML file contents have been updated
     public void saveDOMtoXML()
     {
         try

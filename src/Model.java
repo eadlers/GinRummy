@@ -3,12 +3,14 @@ public class Model {
     private final Dealer dealer;
     private Player player;
     private Player computerPlayer;
+    private DataStorage playerInfo;
 
 
     public Model() {
         dealer = new Dealer();
         player = new Player(dealer);
         computerPlayer = new Player(dealer, "Computer");
+        playerInfo = new DataStorage("players.xml");
         dealer.getDiscardPile().add(dealer.getDeck().remove(0));
     }
     //Purpose: Getter method
@@ -33,6 +35,10 @@ public class Model {
     //Post-conditions: Returns computerPlayer object
     public Player getComputerPlayer() {
         return computerPlayer;
+    }
+
+    public DataStorage getPlayerInfo() {
+        return playerInfo;
     }
 
 

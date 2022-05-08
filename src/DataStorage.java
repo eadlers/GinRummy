@@ -7,15 +7,15 @@ import javax.xml.transform.stream.*;
 
 public class DataStorage {
 
-    Document dom;
+    private Document dom;
 
-    final String PLAYER_OUTPUT_FILENAME = "players_output.xml";
+    final private String PLAYER_OUTPUT_FILENAME = "players_output.xml";
 
-    final String PLAYER_TAG_NAME = "player";
-    final String NAME_TAG_NAME = "name";
-    final String DEADWOOD_TAG_NAME = "deadwoodScore";
-    final String SCORE_TAG_NAME = "score";
-    final String ID_TAG_NAME = "playerId";
+    final private String PLAYER_TAG_NAME = "player";
+    final private String NAME_TAG_NAME = "name";
+    final private String DEADWOOD_TAG_NAME = "deadwoodScore";
+    final private String SCORE_TAG_NAME = "score";
+    final private String ID_TAG_NAME = "playerId";
 
     public DataStorage(String filename) {
         dom = createDOM(filename);
